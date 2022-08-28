@@ -39,6 +39,11 @@ public class TransactionService {
 	@Transactional
 	public String createTransaction(Transaction transaction)throws Exception
 	{
+
+		if(this.userRepository.findById(transaction.getSenderID()).get().getUserID().isEmpty())
+			throw new Exception("sender doesn't exist");
+		if(this.userRepository.findById(transaction.getReceiverID()).get().getUserID().isEmpty())
+			throw new Exception("receiver doesn't exist");
 		String transactionID;
 		Long amount= transaction.getAmount();
 		Long senderBalance= this.userRepository.findById(transaction.getSenderID()).get().getBalance();
