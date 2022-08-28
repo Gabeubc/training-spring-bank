@@ -28,6 +28,14 @@ public class Transaction {
 		return transactionID;
 	}
 
+	public Transaction(String transactionID, String senderID, String receiverID, Long amount) {
+		super();
+		this.transactionID = transactionID;
+		this.senderID = senderID;
+		this.receiverID = receiverID;
+		this.amount = amount;
+	}
+
 	public void setTransactionID(String transactionID) {
 		this.transactionID = transactionID;
 	}
