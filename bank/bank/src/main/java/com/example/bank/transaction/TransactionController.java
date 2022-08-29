@@ -31,7 +31,7 @@ public class TransactionController {
 	}
 	
 	@PostMapping
-	public String createTransaction(Transaction transaction)throws Exception
+	public String createTransaction(@RequestBody Transaction transaction)throws Exception
 	{
 		return this.transactionService.createTransaction(transaction);
 	}

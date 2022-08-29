@@ -2,6 +2,8 @@ package com.example.bank.user;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ public class UserService {
 	{
 		if(!this.userRepository.findUserByEmail(email).isPresent())
 			throw new Exception("there is no user associated to this email");
-		return this.userRepository.findById(email).get();
+		return this.userRepository.findUserByEmail(email).get();
 	}
 	
 	public String createUser(User user)throws Exception
@@ -43,5 +45,18 @@ public class UserService {
 		if(!this.userRepository.findUserByEmail(user.getEmail()).isPresent())
 			throw new Exception("An error occcured during the creation of you accoun. Please try again!");
 		return "Welcome " + user.getFirstName();
+	}
+	
+	@Transactional
+	public String addMoney(String userID, Long balance)
+	{
+		try {
+			this.userRepository.findById(userID).get().setBalance(this.userRepository.findById(userID).get().getBalance() + balance);
+		}
+		catch(Exception e)
+		{
+			System.out.println("error during add money");
+		}
+		return "end";
 	}
 }

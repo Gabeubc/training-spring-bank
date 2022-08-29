@@ -37,6 +37,11 @@ public class UserController {
 		return this.userService.createUser(user);
 	}
 	
+	@PutMapping("/{userID}")
+	public String addMoney(@PathVariable String userID, @RequestBody Long amount)
+	{
+		return this.userService.addMoney(userID, amount);
+	}
 	
 
 }

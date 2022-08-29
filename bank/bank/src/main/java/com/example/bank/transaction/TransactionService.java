@@ -48,13 +48,15 @@ public class TransactionService {
 		Long amount= transaction.getAmount();
 		Long senderBalance= this.userRepository.findById(transaction.getSenderID()).get().getBalance();
 		Long receiverBalance= this.userRepository.findById(transaction.getReceiverID()).get().getBalance();
+		if(amount>senderBalance)
+			throw new Exception("low balance" + senderBalance);
 		countID++;
 		transactionID="TX";
 		for (int i=2 ; i< 6 - countID.toString().length(); i++)
 			transactionID=transactionID + "0";
 		transactionID=transactionID + countID;
 		this.userRepository.findById(transaction.getSenderID()).get().setBalance(senderBalance-amount);
-		this.userRepository.findById(transaction.getReceiverID()).get().setBalance(receiverBalance-amount);
+		this.userRepository.findById(transaction.getReceiverID()).get().setBalance(receiverBalance+amount);
 		transaction.setTransactionID(transactionID);
 		transaction.setAmount(amount);
 		if(this.transactionRepository.findById(transaction.getTransactionID()).isPresent())
